@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!---->
+<project name="usermanagement" basedir="." default="test">
+    <description>
+        description
+    </description>
+
+    <property name="buildDir" value="${basedir}/out"/>
+    <property name="classes-dir" value="${buildDir}/classes"/>
+    <property name="mainJavaDir" value="${basedir}/src/main/java/"/>
+    <property name="test-java-dir" value="${basedir}/src/test/java"/>
+    <property name="libDir" value="${basedir}/lib"/>
+
+    <property name="ant-build-javac-source" value="1.8"/>
+    <property name="ant-build-javac-target" value="1.8"/>
+
+    <path id="classpath-test">
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="hamcrest-core-1.3.jar"/>
+        <pathelement location="${buildDir}"/>
+    </path>
+
+    <target name="test" depends="test-compile">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath>
+                <path refid="classpath-test"/>
+                <pathelement location="${buildDir}"/>
+            </classpath>
+
+            <formatter type="brief" />
+
+            <batchtest>
+                <fileset dir="${buildDir}" includes="**/*Test.class" />
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="test-compile" depends="compile">
+        <javac target="${ant-build-javac-target}" srcdir="${test-java-dir}" destdir="${buildDir}" includeantruntime="on" debug="on">
+            <classpath refid="classpath-test"/>
+        </javac>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac target="${ant-build-javac-target}" includeantruntime="false" srcdir="${mainJavaDir}" destdir="${buildDir}" />
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${buildDir}"/>
+        <mkdir dir="${classes-dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${buildDir}" failonerror="no"/>
+    </target>
+</project>
