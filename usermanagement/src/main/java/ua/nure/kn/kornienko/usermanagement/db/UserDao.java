@@ -26,7 +26,7 @@ public interface UserDao {
      * @return
      * @throws DatabaseException
      */
-    Collection<User> getAll() throws DatabaseException;
+    Collection<User> findAll() throws DatabaseException;
 
     /**
      * all field
