@@ -1,4 +1,7 @@
 *.class
+db.properties
+db.script
+db.lck
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -13,7 +16,9 @@ hs_err_pid*
 
 # Target, bin and settings
 target/*
+out/*
 bin/*
+db/*
 .settings*
 .classpath
 .project
