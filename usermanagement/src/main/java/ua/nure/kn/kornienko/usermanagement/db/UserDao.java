@@ -1,6 +1,6 @@
-package main.java.ua.nure.kn.kornienko.usermanagement.db;
+package ua.nure.kn.kornienko.usermanagement.db;
 
-import main.java.ua.nure.kn.kornienko.usermanagement.User;
+import ua.nure.kn.kornienko.usermanagement.User;
 
 import java.util.Collection;
 

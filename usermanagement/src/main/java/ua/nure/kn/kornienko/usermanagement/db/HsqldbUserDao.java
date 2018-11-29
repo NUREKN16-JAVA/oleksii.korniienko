@@ -1,13 +1,13 @@
-package main.java.ua.nure.kn.kornienko.usermanagement.db;
+package ua.nure.kn.kornienko.usermanagement.db;
 
-import main.java.ua.nure.kn.kornienko.usermanagement.User;
+import ua.nure.kn.kornienko.usermanagement.User;
 
 
 import java.sql.*;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class HsqldbUserDao implements UserDao {
+class HsqldbUserDao implements UserDao {
     private ConnectionFactory connectionFactory;
 
     private static final String INSERT_QUERU = "INSERT into users (firstname, lastname, dateOfBirth) values (?, ?, ?)";

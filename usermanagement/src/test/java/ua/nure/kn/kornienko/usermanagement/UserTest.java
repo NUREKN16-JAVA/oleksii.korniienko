@@ -1,14 +1,9 @@
-package test.java.ua.nure.kn.kornienko.usermanagement;
+package ua.nure.kn.kornienko.usermanagement;
 
 import junit.framework.TestCase;
-import main.java.ua.nure.kn.kornienko.usermanagement.User;
-//import org.junit.After;
-//import org.junit.Before;
-//import org.junit.Test;
+import ua.nure.kn.kornienko.usermanagement.User;
 
 import java.util.Calendar;
-
-//import static org.junit.Assert.*;
 
 public class UserTest extends TestCase {
 

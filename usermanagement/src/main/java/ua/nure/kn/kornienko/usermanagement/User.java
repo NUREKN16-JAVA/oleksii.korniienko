@@ -1,4 +1,4 @@
-package main.java.ua.nure.kn.kornienko.usermanagement;
+package ua.nure.kn.kornienko.usermanagement;
 
 import java.io.Serializable;
 import java.time.LocalDate;

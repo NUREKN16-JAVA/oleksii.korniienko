@@ -1,7 +1,7 @@
-package test.java.ua.nure.kn.kornienko.usermanagement.db;
+package ua.nure.kn.kornienko.usermanagement.db;
 
-import main.java.ua.nure.kn.kornienko.usermanagement.User;
-import main.java.ua.nure.kn.kornienko.usermanagement.db.*;
+import ua.nure.kn.kornienko.usermanagement.User;
+import ua.nure.kn.kornienko.usermanagement.db.*;
 //import org.dbunit.DBTestCase;
 import org.dbunit.DatabaseTestCase;
 
@@ -45,6 +45,8 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         super.setUp();
 //        userDao = new HsqldbUserDao(new ConnectionFactoryImpl());
         connectionFactory = new ConnectionFactoryImpl();
+//        DaoFactory daoFactory = DaoFactory.getInstance();
+//        UserDao userDao = daoFactory.getUserDao();
         userDao = new HsqldbUserDao(connectionFactory);
     }
 
