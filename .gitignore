@@ -16,9 +16,9 @@ hs_err_pid*
 
 # Target, bin and settings
 target/*
-out/*
+usermanagement/out/*
 bin/*
-db/*
+usermanagement/db/*
 .settings*
 .classpath
 .project
