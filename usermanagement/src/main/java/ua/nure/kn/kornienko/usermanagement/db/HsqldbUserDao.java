@@ -13,6 +13,9 @@ public class HsqldbUserDao implements UserDao {
     private static final String INSERT_QUERU = "INSERT into users (firstname, lastname, dateOfBirth) values (?, ?, ?)";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
 
+    public HsqldbUserDao() {
+    }
+
     public HsqldbUserDao(ConnectionFactory connectionFactory){
         this.connectionFactory = connectionFactory;
     }
@@ -80,6 +83,10 @@ public class HsqldbUserDao implements UserDao {
     @Override
     public void delete(User user) throws DatabaseException {
 
+    }
+
+    public ConnectionFactory getConnectionFactory() {
+        return connectionFactory;
     }
 
     @Override
