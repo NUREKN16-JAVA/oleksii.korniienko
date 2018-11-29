@@ -4,9 +4,9 @@ import java.sql.SQLException;
 
 public class DatabaseException extends Exception {
 
-public DatabaseException() {
-    // TODO Auto-generated constructor stub
-}
+    public DatabaseException() {
+        // TODO Auto-generated constructor stub
+    }
 
     public DatabaseException(String arg0) {
         super(arg0);
