@@ -1,37 +1,54 @@
 package test.java.ua.nure.kn.kornienko.usermanagement.db;
 
 import main.java.ua.nure.kn.kornienko.usermanagement.User;
-import main.java.ua.nure.kn.kornienko.usermanagement.db.DatabaseException;
-import main.java.ua.nure.kn.kornienko.usermanagement.db.UserDao;
+import main.java.ua.nure.kn.kornienko.usermanagement.db.*;
+//import org.dbunit.DBTestCase;
 import org.dbunit.DatabaseTestCase;
 
+//import org.dbunit.PropertiesBasedJdbcDatabaseTester;
+import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
-import org.junit.After;
-import org.junit.Before;
+//import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.dataset.xml.XmlDataSet;
+//import org.junit.After;
+//import org.junit.Before;
 
+import java.io.FileInputStream;
+import java.sql.Connection;
 import java.util.Date;
 
 public class HsqldbUserDaoTest extends DatabaseTestCase {
 
     private UserDao userDao;
+    private ConnectionFactory connectionFactory;
 
     @Override
     protected IDatabaseConnection getConnection() throws Exception {
-        return null;
+        connectionFactory = new ConnectionFactoryImpl();
+        return new DatabaseConnection(connectionFactory.createConnection());
     }
 
     @Override
     protected IDataSet getDataSet() throws Exception {
-        return null;
+        IDataSet dataSet = new XmlDataSet(
+                getClass()
+                .getClassLoader()
+                .getResourceAsStream("usersDataSet.xml")
+        );
+        return dataSet;
     }
 
-    @Before
+//    @Before
     public void setUp() throws Exception {
        super.setUp();
+       userDao = new HsqldbUserDao(new ConnectionFactoryImpl());
+        connectionFactory = new ConnectionFactoryImpl();
+        userDao = new HsqldbUserDao(connectionFactory);
     }
 
-    @After
+
+//    @After
     public void tearDown() throws Exception {
         super.tearDown();
 
@@ -49,7 +66,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNotNull(userExpected);
         assertNotNull(userExpected.getId());
         assertEquals(userExpected.getFirstName(), user.getFirstName());
-        assertEquals(userExpected.getLastName(), user.getFullName());
+        assertEquals(userExpected.getLastName(), user.getLastName());
         assertEquals(userExpected.getDateOfBirth(), user.getDateOfBirth());
     }
 }

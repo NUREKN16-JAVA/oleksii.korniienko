@@ -1,15 +1,16 @@
 package test.java.ua.nure.kn.kornienko.usermanagement;
 
+import junit.framework.TestCase;
 import main.java.ua.nure.kn.kornienko.usermanagement.User;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
-public class UserTest {
+public class UserTest extends TestCase {
 
     private static final String FIRST_NAME = "Ivan";
     private static final String LAST_NAME = "Ivanhoe";
@@ -57,23 +58,23 @@ public class UserTest {
 
 
     private User user;
-    @Before
+//    @Before
     public void setUp() throws Exception {
         user = new User();
     }
 
-    @After
+//    @After
     public void tearDown() throws Exception {
     }
 
-    @Test
+    //@test
     public void testGetFullName() {
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
         assertEquals(FULL_NAME_ETALONE, user.getFullName());
     }
 
-    @Test
+    //@test
     // before day
     public void testGetAge1(){
         Calendar calendar = Calendar.getInstance();
@@ -88,7 +89,7 @@ public class UserTest {
         assertEquals(ETALONE_AGE_BEFORE_DAY, user.getAge());
     }
 
-    @Test
+    //@test
     // before month
     public void testGetAge2(){
         Calendar calendar = Calendar.getInstance();
@@ -103,7 +104,7 @@ public class UserTest {
         assertEquals(ETALONE_AGE_BEFORE_MONTH, user.getAge());
     }
 
-    @Test
+    //@test
     // eq date
     public void testGetAge3(){
         Calendar calendar = Calendar.getInstance();
@@ -118,7 +119,7 @@ public class UserTest {
         assertEquals(ETALONE_AGE_EQ_DATE, user.getAge());
     }
 
-    @Test
+    //@test
     // after day
     public void testGetAge4(){
         Calendar calendar = Calendar.getInstance();
@@ -133,7 +134,7 @@ public class UserTest {
         assertEquals(ETALONE_AGE_AFTER_DAY, user.getAge());
     }
 
-    @Test
+    //@test
     // after month
     public void testGetAge5(){
         Calendar calendar = Calendar.getInstance();
