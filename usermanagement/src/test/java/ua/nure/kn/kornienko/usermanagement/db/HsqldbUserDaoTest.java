@@ -16,6 +16,7 @@ import org.dbunit.dataset.xml.XmlDataSet;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
+import java.util.Collection;
 import java.util.Date;
 
 public class HsqldbUserDaoTest extends DatabaseTestCase {
@@ -41,8 +42,8 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
 //    @Before
     public void setUp() throws Exception {
-       super.setUp();
-       userDao = new HsqldbUserDao(new ConnectionFactoryImpl());
+        super.setUp();
+//        userDao = new HsqldbUserDao(new ConnectionFactoryImpl());
         connectionFactory = new ConnectionFactoryImpl();
         userDao = new HsqldbUserDao(connectionFactory);
     }
@@ -68,5 +69,12 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertEquals(userExpected.getFirstName(), user.getFirstName());
         assertEquals(userExpected.getLastName(), user.getLastName());
         assertEquals(userExpected.getDateOfBirth(), user.getDateOfBirth());
+    }
+
+    public void testFindAll() throws DatabaseException {
+        int expectedUsersNumber = 2;
+        Collection<User> users = userDao.findAll();
+        assertNotNull("Collection is null", users);
+        assertEquals("Collection size.", expectedUsersNumber, users.size());
     }
 }

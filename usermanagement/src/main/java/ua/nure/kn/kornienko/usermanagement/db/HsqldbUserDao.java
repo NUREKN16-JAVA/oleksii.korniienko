@@ -40,6 +40,8 @@ public class HsqldbUserDao implements UserDao {
             return user;
         } catch (SQLException e) {
             throw new DatabaseException(e);
+        } catch (DatabaseException e) {
+            throw new DatabaseException(e);
         }
     }
 
