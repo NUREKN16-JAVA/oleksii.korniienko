@@ -12,6 +12,9 @@ class HsqldbUserDao implements UserDao {
 
     private static final String INSERT_QUERU = "INSERT into users (firstname, lastname, dateOfBirth) values (?, ?, ?)";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
+    private static final String UPDATE_QUERY = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ?  WHERE id = ?";
+    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ?";
 
     public HsqldbUserDao() {
     }
@@ -53,7 +56,22 @@ class HsqldbUserDao implements UserDao {
 
     @Override
     public User find(long id) throws DatabaseException {
-        return null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try (Connection connection = connectionFactory.createConnection()) {
+            preparedStatement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+            preparedStatement.setLong(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                preparedStatement.close();
+                User resultUser = mapUser(resultSet);
+                resultSet.close();
+                return resultUser;
+            }
+            throw new DatabaseException("Can not find user by id: " + id);
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     @Override
@@ -77,12 +95,38 @@ class HsqldbUserDao implements UserDao {
 
     @Override
     public void update(User user) throws DatabaseException {
-
+        PreparedStatement preparedStatement = null;
+        try (Connection connection = connectionFactory.createConnection()) {
+            preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+            int count = 1;
+            preparedStatement.setString(count++, user.getFirstName());
+            preparedStatement.setString(count++, user.getLastName());
+            preparedStatement.setDate(count++, new Date(user.getDateOfBirth().getTime()));
+            preparedStatement.setLong(count, user.getId());
+            int updatedRows = preparedStatement.executeUpdate();
+            if (updatedRows != 1) {
+                throw new DatabaseException("Exception while update operation. Effected rows: " + updatedRows);
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     @Override
     public void delete(User user) throws DatabaseException {
-
+        PreparedStatement preparedStatement = null;
+        try (Connection connection = connectionFactory.createConnection()) {
+            preparedStatement = connection.prepareStatement(DELETE_QUERY);
+            preparedStatement.setLong(1, user.getId());
+            int updatedRows = preparedStatement.executeUpdate();
+            if (updatedRows != 1) {
+                throw new DatabaseException("Exception while delete operation. Effected rows: " + updatedRows);
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public ConnectionFactory getConnectionFactory() {
