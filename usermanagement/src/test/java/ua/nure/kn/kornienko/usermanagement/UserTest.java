@@ -28,13 +28,13 @@ public class UserTest extends TestCase {
     private static final int BIRTH_YEAR_EQ_DATE = 1999;
     private static final int BIRTH_MONTH_EQ_DATE = Calendar.NOVEMBER;
     private static final int BIRTH_DAY_EQ_DATE = 23;
-    private static final int ETALONE_AGE_EQ_DATE = 19;
+    private static final int ETALONE_AGE_EQ_DATE = 18;
 
     // test birth date the day after
     private static final int BIRTH_YEAR_AFTER_DAY = 1999;
     private static final int BIRTH_MONTH_AFTER_DAY = Calendar.NOVEMBER;
     private static final int BIRTH_DAY_AFTER_DAY = 23;
-    private static final int ETALONE_AGE_AFTER_DAY = 19;
+    private static final int ETALONE_AGE_AFTER_DAY = 18;
 
     // test birth date the month after
     private static final int BIRTH_YEAR_AFTER_MONTH = 1999;

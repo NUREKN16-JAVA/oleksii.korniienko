@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class User implements Serializable {
 
@@ -14,6 +15,24 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
+
+    public User() {
+
+    }
+    public User(Long id, String firstName, String lastName, Date dateOfBirth) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+
+
+    }
+    public User(String firstName, String lastName, Date date) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = date;
+
+    }
 
     public Long getId() {
         return id;
@@ -72,5 +91,27 @@ public class User implements Serializable {
             age--;
 
         return age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.isNull(id) ? 0 : Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
     }
 }

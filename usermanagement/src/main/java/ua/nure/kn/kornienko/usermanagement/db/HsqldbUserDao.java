@@ -55,7 +55,7 @@ class HsqldbUserDao implements UserDao {
     }
 
     @Override
-    public User find(long id) throws DatabaseException {
+    public User find(Long id) throws DatabaseException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try (Connection connection = connectionFactory.createConnection()) {
