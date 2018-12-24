@@ -26,3 +26,5 @@ usermanagement/db/*
 .idea
 *.txt
 lib/*
+library/*
+*.zip
