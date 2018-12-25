@@ -1,16 +1,13 @@
 package ua.nure.kn.kornienko.usermanagement;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -3760492779402022862L;
+    private static final long serialVersionUID = 438128579530615585L;
     private Long id;
     private String firstName;
     private String lastName;

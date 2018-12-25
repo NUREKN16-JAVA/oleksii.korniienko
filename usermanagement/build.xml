@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!---->
-<project name="usermanagement" basedir="." default="test">
+<project name="usermanagement" basedir="." default="war">
     <description>
         description
     </description>
 
     <property name="buildDir" value="${basedir}/out"/>
     <property name="classes-dir" value="${buildDir}/classes"/>
-    <property name="mainJavaDir" value="${basedir}/src/main/java/"/>
+    <property name="mainJavaDir" value="${basedir}/src/main/java"/>
+
     <property name="test-java-dir" value="${basedir}/src/test/java"/>
-    <property name="libDir" value="${basedir}/lib"/>
+    <property name="main-res-dir" value="${basedir}/src/main/resources"/>
+    <property name="test-res-dir" value="${basedir}/src/test/resources"/>
+
+    <property name="libDir" value="${basedir}/library"/>
+
+    <property name="main-webapp-dir" value="${basedir}/src/main/webapp"/>
+    <property name="main-webapp-webinf-dir" value="${basedir}/src/main/webapp/WEB-INF"/>
+
+    <property name="war-name" value="users"/>
+    <property name="war-dir" value="${basedir}/${war-name}"/>
+    <property name="war-jsp-dir" value="${war-dir}"/>
+    <property name="war-webinf-dir" value="${war-dir}/WEB-INF"/>
+    <property name="war-lib-dir" value="${war-webinf-dir}/lib"/>
+    <property name="war-build-dir" value="${war-webinf-dir}/classes"/>
 
     <property name="ant-build-javac-source" value="1.8"/>
     <property name="ant-build-javac-target" value="1.8"/>
@@ -20,29 +34,79 @@
         <pathelement location="${buildDir}"/>
     </path>
 
-    <target name="test" depends="test-compile">
-        <junit printsummary="yes" haltonfailure="no">
-            <classpath>
-                <path refid="classpath-test"/>
-                <pathelement location="${buildDir}"/>
-            </classpath>
+    <!--<target name="test" depends="test-compile">-->
+        <!--<junit printsummary="yes" haltonfailure="no">-->
+            <!--<classpath>-->
+                <!--<path refid="classpath-test"/>-->
+                <!--<pathelement location="${buildDir}"/>-->
+            <!--</classpath>-->
 
-            <formatter type="brief" />
+            <!--<formatter type="brief" />-->
 
-            <batchtest>
-                <fileset dir="${buildDir}" includes="**/*Test.class" />
-            </batchtest>
-        </junit>
+            <!--<batchtest>-->
+                <!--<fileset dir="${buildDir}" includes="**/*Test.class" />-->
+            <!--</batchtest>-->
+        <!--</junit>-->
+    <!--</target>-->
+
+    <!--<target name="test-compile" depends="compile">-->
+        <!--<javac target="${ant-build-javac-target}" srcdir="${test-java-dir}" destdir="${buildDir}" includeantruntime="on" debug="on">-->
+            <!--<classpath refid="classpath-test"/>-->
+        <!--</javac>-->
+        <!--<copy todir="${buildDir}">-->
+            <!--<fileset dir="${test-res-dir}">-->
+                <!--<include name="**/*.properties"/>-->
+                <!--<include name="**/*.xml"/>-->
+            <!--</fileset>-->
+        <!--</copy>-->
+    <!--</target>-->
+
+    <target name="war" depends="war.exploded">
+        <delete file="${buildDir}/${war-name}.war" failonerror="no"/>
+        <war destfile="${buildDir}/${war-name}.war" webxml="${main-webapp-webinf-dir}/web.xml">
+            <fileset dir="${war-jsp-dir}">
+                <exclude name="WEB-INF/*.*"/>
+            </fileset>
+            <classes dir="${war-build-dir}"/>
+            <lib dir="${war-lib-dir}"/>
+            <webinf dir="${war-webinf-dir}">
+                <exclude name="web.xml"/>
+            </webinf>
+        </war>
+
     </target>
 
-    <target name="test-compile" depends="compile">
-        <javac target="${ant-build-javac-target}" srcdir="${test-java-dir}" destdir="${buildDir}" includeantruntime="on" debug="on">
-            <classpath refid="classpath-test"/>
-        </javac>
+    <target name="war.exploded" depends="compile">
+        <copy todir="${war-jsp-dir}">
+            <fileset dir="${main-webapp-dir}"/>
+        </copy>
+        <copy todir="${war-lib-dir}">
+            <fileset dir="${libDir}">
+                <include name="hsqldb*.jar"/>
+                <include name="jstl*.jar"/>
+                <include name="standard*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${war-build-dir}">
+            <fileset dir="${main-res-dir}"/>
+        </copy>
+        <copy todir="${war-build-dir}">
+            <fileset dir="${buildDir}"/>
+        </copy>
     </target>
 
     <target name="compile" depends="init">
-        <javac target="${ant-build-javac-target}" includeantruntime="false" srcdir="${mainJavaDir}" destdir="${buildDir}" />
+        <javac target="${ant-build-javac-target}" includeantruntime="false" srcdir="${mainJavaDir}" destdir="${buildDir}" >
+            <classpath>
+                <fileset dir="${libDir}"/>
+            </classpath>
+        </javac>
+        <copy todir="${buildDir}">
+            <fileset dir="${main-res-dir}">
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="init" depends="clean">

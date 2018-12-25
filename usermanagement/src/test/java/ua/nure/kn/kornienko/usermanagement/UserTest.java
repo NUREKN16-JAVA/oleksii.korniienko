@@ -40,7 +40,7 @@ public class UserTest extends TestCase {
     private static final int BIRTH_YEAR_AFTER_MONTH = 1999;
     private static final int BIRTH_MONTH_AFTER_MONTH = Calendar.DECEMBER;
     private static final int BIRTH_DAY_AFTER_MONTH = 22;
-    private static final int ETALONE_AGE_AFTER_MONTH = 19;
+    private static final int ETALONE_AGE_AFTER_MONTH = 18;
 
 //    private static final int YEAR_OF_BIRTH = 1999;
 //    private static final int MONTH_OF_BIRTH = 11;
