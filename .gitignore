@@ -28,3 +28,7 @@ usermanagement/db/*
 lib/*
 library/*
 *.zip
+
+usermanagement/apache-tomcat-7.0.92/*
+usermanagement/tomcat/*
+usermanagement/users/
