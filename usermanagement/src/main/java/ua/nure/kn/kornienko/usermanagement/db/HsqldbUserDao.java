@@ -4,6 +4,7 @@ import ua.nure.kn.kornienko.usermanagement.User;
 
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -15,6 +16,7 @@ class HsqldbUserDao implements UserDao {
     private static final String UPDATE_QUERY = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ?  WHERE id = ?";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ?";
+    private static final String SELECT_USERS_BY_FULL_NAME = "SELECT * FROM users WHERE FIRSTNAME = ? AND LASTNAME = ?";
 
     public HsqldbUserDao() {
     }
@@ -91,6 +93,38 @@ class HsqldbUserDao implements UserDao {
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+    @Override
+    public Collection<User> find(String firstName, String lastName) {
+        Collection<User> userList = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = connectionFactory.createConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_USERS_BY_FULL_NAME);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                userList.add(mapUser(resultSet));
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+            return userList;
+        } catch (DatabaseException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return userList;
     }
 
     @Override
